@@ -28,9 +28,9 @@
     {% endfor %}
 </table>
 <div>
+    <button id="check_btn">Check</button>
+    <button id="solution_btn">Show Solution</button>
     <form action="/sudoku" method="post">
-        <button id="check_btn">Check</button>
-        <button id="solution_btn">Show Solution</button>
         <button id="generate_new_btn" type="submit">New Sudoku</button>
         <select name="difficulty" id="difficulty_select">
             <option value="EASY">Easy</option>
