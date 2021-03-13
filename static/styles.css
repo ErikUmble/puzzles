@@ -1,0 +1,46 @@
+.sudoku table {
+  margin:1em auto;
+}
+.sudoku td {
+  height:48px;
+  width:48px;
+  border:1px solid;
+  text-align:center;
+}
+.sudoku td:first-child {
+  border-left:solid;
+}
+.sudoku td:nth-child(3n) {
+  border-right:solid ;
+}
+.sudoku tr:first-child {
+  border-top:solid;
+}
+.sudoku tr:nth-child(3n) td {
+  border-bottom:solid ;
+}
+
+.sudoku input {
+  color: #000000;
+  padding: 0;
+  border: 0;
+  text-align: center;
+  width: 48px;
+  height: 48px;
+  /*font-size: 24px;*/
+  background-color: #FFFFFF;
+  outline: none;
+}
+.sudoku input:hover {
+  background: #101010;
+}
+
+.error {
+  border: 3px solid #FF0000;
+}
+
+/*
+.initialValue, .editValue {
+  width: 48px;
+  height: 48px;
+}*/
