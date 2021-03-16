@@ -71,21 +71,40 @@ function assignment_complete(assignment) {
     return true;
 }
 
+function render_updates(updates){
+    // Temporarily changes the class of each square in update to include "update"
+    for (let i = 0; i < updates.length; i++) {
+        let changed_square = updates[i];
+        // save previous class info
+        let square = document.getElementById(changed_square);
+        let original = square.getAttribute("class");
 
-function render_assignment(assignment, overwrite_with_blanks=false, overwrite_initial_squares=true) {
+        square.setAttribute("class", original + " update");
+        setTimeout(function() {
+            square.setAttribute("class", original);
+        }, 2000);
+    }
+}
+
+function render_assignment(assignment, previous_assignment=get_current_pseudo_assignment(), overwrite_with_blanks=false, overwrite_initial_squares=true) {
     // an assignment with every square assigned to "0" will completely clear the grid if overwrite_with_blanks == true && overwrite_initial_squares == true
     // any non zero assigned value will overwrite its square no matter what
     // "0" in assignment can leave the corresponding squares as they are if overwrite_with_blanks == false
     // by default, the initially filled in squares, with html span tags, will not be changed unless overwrite_initial_squares == true
-
+    let updates = [];
     for (const square in assignment) {
+
 
         // see if we will be overwriting
         if (assignment[square] !== "0" || overwrite_with_blanks) {
             let s = document.getElementById(square).children[0];
 
             if (s.tagName == "INPUT") {
-                s.value = assignment[square];
+                if (s.value !== assignment[square]) {
+                    s.value = assignment[square];
+                    updates.push(square);
+                }
+
             }
             else if (s.tagName == "SPAN" && overwrite_initial_squares) {
                 // overwrite initially filled in squares
@@ -93,6 +112,7 @@ function render_assignment(assignment, overwrite_with_blanks=false, overwrite_in
             }
         }
     }
+    render_updates(updates);
 }
 
 function render_errors(errors) {
@@ -100,9 +120,7 @@ function render_errors(errors) {
     for (let i = 0; i < errors.length; i++) {
         let error = errors[i];
         // save previous class info
-        console.log(error);
         let square = document.getElementById(error);
-        console.log(square.tagName);
         let original = square.getAttribute("class");
 
         square.setAttribute("class", original + " error");
@@ -113,11 +131,35 @@ function render_errors(errors) {
 
 }
 
+function get_hint_placeholders() {
+    // returns a list of the input ids that have the current value of ?
+    rows = new Array("A", "B", "C", "D", "E", "F", "G", "H", "I");
+    cols = new Array("1", "2", "3", "4", "5", "6", "7", "8", "9");
+    hints = [];
+
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let id = rows[i] + cols[j];
+            let square = document.getElementById(id).children[0];
+
+            if (square.tagName == "INPUT") {
+                if (square.value === "?") {
+                    hints.push(rows[i] + cols[j]);
+                }
+            }
+
+
+        }
+    }
+    return hints;
+}
+
 function initialize() {
     // Setup buttons and load solution
 
     let check_btn = document.getElementById("check_btn");
     let solution_btn = document.getElementById("solution_btn");
+    let hint_btn = document.getElementById("hint_btn")
     let ps_assignment = get_current_pseudo_assignment();
     let solution = {};
     //let errors = [];
@@ -128,10 +170,10 @@ function initialize() {
 
         if (result["consistent"]) {
             if (assignment_complete(assignment)) {
-                alert("you finished");
+                alert("Congradulations! You finished!");
             }
             else {
-                alert("Good to go");
+                alert("So far so good...");
             }
 
         }
@@ -149,18 +191,47 @@ function initialize() {
         }
     });
 
-    // get and load solution (with AJAX), and set up solution_btn
+    // get and load solution (with AJAX), and set up solution_btn, hint_btn
     $.ajax({
         url:"/get_sudoku_solution",
         type: "POST",
         data: JSON.stringify(ps_assignment),
         contentType: "application/json",
         success: function(solved_assignment) {
+            console.log("Loaded solution");
             solution = solved_assignment;
 
             // setup solution_btn
             solution_btn.addEventListener("click", function() {
                 render_assignment(solution);
+            });
+
+            // setup hint_btn
+            hint_btn.addEventListener("click", function() {
+                let hints = get_hint_placeholders();
+                ps_assignment = get_current_pseudo_assignment();
+
+
+                // fill assignment with squares that will be hinted
+                if (hints.length === 0) {
+                    alert("Specify squares to get hints for by putting a ? in before pressing 'Hint'");
+                    // hint with the first unfilled square from assignment
+                    for (const square in ps_assignment) {
+                        if (ps_assignment[square] === "0") {
+                            ps_assignment[square] = solution[square];
+                            break;
+                        }
+                    }
+
+                }
+                else {
+                    for (let i = 0; i < hints.length; i++) {
+                        ps_assignment[hints[i]] = solution[hints[i]];
+                    }
+                }
+
+                // render the updated assignment
+                render_assignment(ps_assignment);
             });
         }
     });

@@ -3,33 +3,36 @@
 {% block main %}
 
 
+<div>
+    <table class="sudoku p-auto">
+        {% for row in squares %}
+            <tr>
+                {% for square in row %}
+                    {% if assignment[square] in "987654321" %}
+                        <td>
+                            <div class="initialValue" id="{{ square }}">
+                                <span>{{ assignment[square] }}</span>
+                            </div>
+                        </td>
 
-<table class="sudoku p-auto">
-    {% for row in squares %}
-        <tr>
-            {% for square in row %}
-                {% if assignment[square] in "987654321" %}
-                    <td>
-                        <div class="initialValue" id="{{ square }}">
-                            <span>{{ assignment[square] }}</span>
-                        </div>
-                    </td>
+                    {% else %}
+                        <td>
+                            <div class="editValue" id="{{ square }}">
+                                <input type="text" maxlength="1">
+                            </div>
+                        </td>
 
-                {% else %}
-                    <td>
-                        <div class="editValue" id="{{ square }}">
-                            <input type="text" maxlength="1">
-                        </div>
-                    </td>
-
-                {% endif %}
-            {% endfor %}
-        </tr>
-    {% endfor %}
-</table>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
 <div>
     <button id="check_btn">Check</button>
     <button id="solution_btn">Show Solution</button>
+    <button id="hint_btn">Hint</button>
+    <p/>
     <form action="/sudoku" method="post">
         <button id="generate_new_btn" type="submit">New Sudoku</button>
         <select name="difficulty" id="difficulty_select">
@@ -40,6 +43,7 @@
         </select>
     </form>
 </div>
+<p/>
 <div>
     Note: the sudoku is generated with a very rough estimate of difficulty, if you find that it is not the right difficuly for you, simply try a new one.
 </div>

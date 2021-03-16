@@ -32,15 +32,15 @@
   outline: none;
 }
 .sudoku input:hover {
-  background: #101010;
+  background: #0000FF;
+  opacity: 0.1;
 }
 
 .error {
   border: 3px solid #FF0000;
+
 }
 
-/*
-.initialValue, .editValue {
-  width: 48px;
-  height: 48px;
-}*/
+.update {
+  border: 3px solid #0000FF;
+}

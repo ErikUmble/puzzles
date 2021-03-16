@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, json, redirect
+from flask import Flask, render_template, request, json, redirect, url_for
 
 import sudoku
 
@@ -13,7 +13,7 @@ def index():
 @app.route("/sudoku", methods=["GET", "POST"])
 def sudoku_page():
     if request.method == "GET":
-        puzzle = sudoku.Sudoku(generate=True)
+        puzzle = sudoku.Sudoku(generate=True, difficulty="MEDIUM")
     else:
         # Coming from "New Sudoku" button
         difficulty = request.form.get("difficulty", "MEDIUM")
