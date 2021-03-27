@@ -2,6 +2,13 @@
 
 Puzzles is a flask app that also contains AI Sudoku and Kenken solving services.
 
+## Video Demo: <https://youtu.be/1ZBfjL5ZO60>
+
+## Play Web App
+Here: <http://birddetails.com/puzzles?game=sudoku>
+or here: <https://birddetails.herokuapp.com/sudoku>
+or download and install as per below
+
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
@@ -50,11 +57,12 @@ kenken.possible_set(kenken.ADD, 6, 3, 9)  # returns {"1", "2", "3", "4"} which i
 ## Description
 This is the result of my CS50 final project. Here is a little about the journey to this code:
 First, I started with making a sudoku AI that would then be able to generate new random sudokus. After maybe 5 different attempts at getting a backtracking with constraint satisfaction
-and inference to work, I ended up going with the depth first search done by Peter Norvig (https://norvig.com/sudoku.html). I later took the same algorithm and extended it in
+and inference to work, I ended up going with the depth first search algorithm described by Peter Norvig (https://norvig.com/sudoku.html). I later took the same algorithm and extended it in
 kenken.py to solve kenkens.
 With the solving algorithm in place, I worked on setting up the flask application. This part was not too complicated, and only required adding a few routes
 and data transfer methods to send puzzles to the html templates. I ended up using ideas from https://testdrive-archive.azurewebsites.net/Performance/Sudoku/Default.html
-for setting up the javascript, but stuck with python for the AI, using an ajax call to load the solution while the user begins playing.
+for setting up the javascript, but stuck with python for the AI, using an ajax call to load the solution while the user begins playing. For the kenken, I used
+html ideas from http://www.mlsite.net/neknek/ as well as a few of the same features as with the sudoku.
 Puzzle generation is one of the main things this application is currently lacking; I cannot yet generate random kenkens (currently, kenkens are only "generated" from a collection
 stored in kenken_grids/), and the sudoku generation is quite inefficient and does not produce reliable difficulty levels.
 I plan to work on fixing these problems, as well as adding functionality for a user to load their own sudoku or kenken into the site and recieve the AI service help.
