@@ -36,9 +36,54 @@
   opacity: 0.1;
 }
 
-.error {
+.kenken table {
+  margin:1em auto;
+}
+.kenken td {
+  height:3em;
+  width:5em;
+  border:2px solid;
+  text-align:center;
+}
+.kenken td p {
+	margin:				0px;
+	border:				0px;
+	padding:			0px;
+}
+.kenken td p.cage_header {
+	height:				1em;
+	text-align:			left;
+}
+.kenken td p.cage_header span {
+	font-family:		Verdana;
+	font-weight:		bold;
+	font-size:			0.75em;
+	padding-left:		0.5em;
+}
+.kenken input {
+  color: #000000;
+  padding: 0;
+  border: 0;
+  font-size: 2em;
+  text-align: center;
+  width: 48px;
+  height: 48px;
+  /*font-size: 24px;*/
+  background-color: #FFFFFF;
+  outline: none;
+  margin-bottom: 0px;
+}
+.kenken input:hover {
+  background: #0000FF;
+  opacity: 0.1;
+}
+
+.sudoku .error {
   border: 3px solid #FF0000;
 
+}
+.kenken .error {
+  border: 3px solid #FF0000;
 }
 
 .update {
