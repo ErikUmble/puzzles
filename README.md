@@ -5,7 +5,7 @@ Puzzles is a flask app that also contains AI Sudoku and Kenken solving services.
 ## Video Demo: <https://youtu.be/1ZBfjL5ZO60>
 
 ## Play Web App
-Here:n<https://birddetails.herokuapp.com/sudoku>
+Here: <https://birddetails.herokuapp.com/sudoku>
 or download and install as per below
 
 ## Installation
