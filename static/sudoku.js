@@ -241,3 +241,10 @@ function initialize() {
 
 
 addEventListener("DOMContentLoaded", initialize);
+
+/*
+You just have one more piece to complete the flag: 
+The final part of the flag is of the format 0bXXXXXXXXXXX} 
+where the X’s are the digits of the series number of this schoolhouse series, but in binary. 
+See if you can find it in the url.
+*/
